@@ -13,6 +13,7 @@ public class BestFit
         /*
          * Put your code in here!
          */
+        int idk;
 
 
     }
