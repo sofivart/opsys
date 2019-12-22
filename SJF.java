@@ -3,19 +3,55 @@ public class SJF
     // Method that calculates the waiting time for all processes
     static int[] calcWaitingTime(int burstTime[], int quantum)
     {
-        /*
-         * Put your code here!
-         */
+        int n = burstTime.length;
+        int[] ar= new int[n];
+        for(int i=0;i<n;i++){
+            ar[i]=i;
+        }
+        int[] time=new int[n];
+        int[] bt;
+        bt = burstTime.clone();
+        for(int i=0;i<n-1;i++){
+            for(int j=0;j<n-i-1;j++){
+                if(bt[j]>bt[j+1]){
+                    int temp=bt[j];
+                    bt[j]=bt[j+1];
+                    bt[j+1]=temp;
+                    temp=ar[j];
+                    ar[j]=ar[j+1];
+                    ar[j+1]=temp;
+                }
+            }
+        }
+        for(int i=1;i<n;i++){
+            time[i]=time[i-1]+bt[i-1];
+        }
+        for(int i=0;i<n;i++){
+            System.out.println(ar[i]);
+        }
+        int[]waitingtime=time.clone();
+        for (int i=0;i<n;i++){
+            waitingtime[ar[i]]=time[i];
+        }
+        return waitingtime;
 
     }
 
     // Method that calculates turn around time for all processes
     static int[] calcTurnAroundTime(int burstTime[], int waitingTime[])
     {
-        /*
-         * Put your code here!
-         */
+        int n = burstTime.length;
+        int[] ar= new int[n];
+        for(int i=0;i<n;i++){
+            ar[i]=i;
+        }
+        int[] time=new int[n];
 
+        for(int i=0;i<n;i++){
+            time[i]=burstTime[i]+waitingTime[i];
+        }
+
+        return time;
     }
 
     // Method that prints the results and calculates the average waiting and
