@@ -10,9 +10,27 @@ public class NextFit
      */
     static ArrayList<Integer> nextFit(int sizeOfBlocks[], int sizeOfProcesses[])
     {
-        /*
-         * Put your code in here!
-         */
+        int m=sizeOfBlocks.length;
+        int n=sizeOfProcesses.length;
+        ArrayList<Integer> array = new ArrayList<Integer>(n);
+        int j=0;
+
+        for(int i=0;i<n;i++){
+            int k=0;
+            int flag=0;
+            while(k<m){
+                k++;
+                if(sizeOfBlocks[j]>=sizeOfProcesses[i]){
+                    flag=1;
+                    array.add(j);
+                    sizeOfBlocks[j] -= sizeOfProcesses[i];
+                    break;
+                }
+                j=(j+1)%m; //from where we stop
+            }
+            if(flag==0){array.add(-255);}
+        }
+        return array;
 
     }
 
@@ -22,7 +40,7 @@ public class NextFit
         System.out.println("===========\t=========");
         for (int i = 0; i < memAllocation.size(); i++)
         {
-            System.out.print(" " + i + "\t\t");
+            System.out.print("\t " + i + "\t\t\t");
             // if a process has been allocated position -255, it means that it
             // has not been actually allocated
             if (memAllocation.get(i) != -255)
