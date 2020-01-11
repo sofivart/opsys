@@ -10,11 +10,34 @@ public class BestFit
      */
     static ArrayList<Integer> bestFit(int sizeOfBlocks[], int sizeOfProcesses[])
     {
-        /*
-         * Put your code in here!
-         */
-        int idk;
+        int m=sizeOfBlocks.length;
+        int n=sizeOfProcesses.length;
+        ArrayList<Integer> array = new ArrayList<Integer>(n);
 
+        // pick each process and find suitable blocks
+        // according to its size ad assign to it
+        for(int i=0;i<n;i++){
+            int best=-255;
+            //We want the smallest sufficient partition among the free available partitions
+            for (int j=0; j<m; j++) {
+                if (sizeOfBlocks[j] >= sizeOfProcesses[i]) {
+                    if (best == -255)
+                        best = j;
+                    else if (sizeOfBlocks[best] > sizeOfBlocks[j])
+                        best = j;
+                }
+            }
+            if (best != -255)
+            {
+                array.add(best);
+                sizeOfBlocks[best] -= sizeOfProcesses[i];
+            }
+            else{
+                array.add(best);
+            }
+
+        }
+        return array;
 
     }
 
@@ -24,7 +47,7 @@ public class BestFit
         System.out.println("===========\t=========");
         for (int i = 0; i < memAllocation.size(); i++)
         {
-            System.out.print(" " + i + "\t\t");
+            System.out.print("\t " + i + "\t\t\t");
             // if a process has been allocated position -255, it means that it
             // has not been actually allocated
             if (memAllocation.get(i) != -255)
