@@ -6,6 +6,39 @@ class FIFO
         /*
          * Put your code in here!
          */
+        int[] memory = new int[capacity];
+        boolean found;
+        for (int i = 0; i<capacity; i++){
+            memory[i] = -1;
+        }
+        int hit = 0;
+        int lastChange = 0;
+        for(int i=0; i< pages.length; i++){
+            found = false;
+            for(int j = 0; j<capacity; j++){
+                if(memory[j] == -1){
+                    memory[j] = pages[i];
+                    lastChange++;
+                    found = true;
+                    break;
+                }
+                if(memory[j] == pages[i]){
+                    hit++;
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                memory[lastChange] = pages[i];
+                lastChange++;
+            }
+            if(lastChange == capacity){
+                lastChange = 0;
+            }
+
+        }
+        int faults = pages.length - hit;
+        return faults;
 
     }
 
