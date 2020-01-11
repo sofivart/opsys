@@ -10,10 +10,23 @@ public class FirstFit
      */
     static ArrayList<Integer> firstFit(int sizeOfBlocks[], int sizeOfProcesses[])
     {
-        /*
-         * Put your code in here!
-         */
-        int n = sizeOfBlocks.length;
+        int m=sizeOfBlocks.length;
+        int n=sizeOfProcesses.length;
+        ArrayList<Integer> array = new ArrayList<Integer>(n);
+        for(int i=0;i<n;i++){
+            int flag=0;
+            for(int j=0;j<m;j++){
+                if(sizeOfBlocks[j]>=sizeOfProcesses[i]){
+                    flag=1;
+                    array.add(j);
+                    sizeOfBlocks[j] -= sizeOfProcesses[i];
+                    break;
+                }
+
+            }
+            if(flag==0){array.add(-255);}
+        }
+        return array;
 
     }
 
@@ -23,7 +36,7 @@ public class FirstFit
         System.out.println("===========\t=========");
         for (int i = 0; i < memAllocation.size(); i++)
         {
-            System.out.print(" " + i + "\t\t");
+            System.out.print("\t " + i + "\t\t\t");
             // if a process has been allocated position -255, it means that it
             // has not been actually allocated
             if (memAllocation.get(i) != -255)
