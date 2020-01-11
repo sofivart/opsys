@@ -10,9 +10,36 @@ public class WorstFit
      */
     static ArrayList<Integer> worstFit(int sizeOfBlocks[], int sizeOfProcesses[])
     {
-        /*
-         * Put your code in here!
-         */
+        //partition which is largest sufficient among the freely available partitions available
+        //If a large process comes at a later stage, then memory will not have space to accommodate it.
+        int m=sizeOfBlocks.length;
+        int n=sizeOfProcesses.length;
+        ArrayList<Integer> array = new ArrayList<Integer>(n);
+        for(int i=0;i<n;i++){
+            int worst=-255;
+            for(int j=0;j<m;j++){
+                if(sizeOfBlocks[j]>=sizeOfProcesses[i]) {
+                    if (worst == -255) {
+                        worst = j;
+                    }
+                    else{
+                        if(sizeOfBlocks[worst]<sizeOfBlocks[j]){
+                            worst=j;
+                        }
+                    }
+                }
+            }
+            if (worst != -255)
+            {
+                array.add(worst);
+                sizeOfBlocks[worst] -= sizeOfProcesses[i];
+            }
+            else {
+                array.add(-255);
+            }
+        }
+        return array;
+
 
     }
 
@@ -22,7 +49,7 @@ public class WorstFit
         System.out.println("===========\t=========");
         for (int i = 0; i < memAllocation.size(); i++)
         {
-            System.out.print(" " + i + "\t\t");
+            System.out.print("\t " + i + "\t\t\t");
             // if a process has been allocated position -255, it means that it
             // has not been actually allocated
             if (memAllocation.get(i) != -255)
