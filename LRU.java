@@ -1,15 +1,28 @@
+import java.util.*;
+
 class LRU
 {
-    // Method to find page faults using indexes
     static int pageFaults(int pages[], int capacity)
     {
-        /*
-         * Put your code in here!
-         */
+        int fault = 1;
+        LinkedList<Integer> list = new LinkedList<>();
 
+        for(int i = 0; i < capacity; i++) {
+            if(!list.contains(pages[i])) {
+                list.add(pages[i]);
+                fault++;
+            }
+        }
 
+        for(int i = capacity; i < pages.length; i++) {
+            if(!list.contains(pages[i])) {
+                list.remove();
+                list.add(pages[i]);
+                fault++;
+            }
+        }
+        return fault;
     }
-
     // Driver Method to test your algorithm with a simple example
     public static void main(String args[])
     {
