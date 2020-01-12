@@ -11,30 +11,29 @@ public class BestFit
      */
     static ArrayList<Integer> bestFit(int sizeOfBlocks[], int sizeOfProcesses[])
     {
-        int m=sizeOfBlocks.length;
-        int n=sizeOfProcesses.length;
-        ArrayList<Integer> array = new ArrayList<Integer>(n);
+        int m=sizeOfBlocks.length;//number of blocks
+        int n=sizeOfProcesses.length;//number of processes
+        ArrayList<Integer> array = new ArrayList<Integer>(n);//Stores block id of the block allocated to a process
 
-        // pick each process and find suitable blocks
-        // according to its size ad assign to it
+
         for(int i=0;i<n;i++){
-            int best=-255;
+            int best=-255;//initialize the minimum block size(best) with -255
             //We want the smallest sufficient partition among the free available partitions
-            for (int j=0; j<m; j++) {
+            for (int j=0; j<m; j++) {// pick each process and find suitable blocks
                 if (sizeOfBlocks[j] >= sizeOfProcesses[i]) {
-                    if (best == -255)
+                    if (best == -255)//if we haven't found a price for best
                         best = j;
-                    else if (sizeOfBlocks[best] > sizeOfBlocks[j])
-                        best = j;
+                    else if (sizeOfBlocks[best] > sizeOfBlocks[j])//if we have-> check if the new price is smaller
+                        best = j;//replace it
                 }
             }
-            if (best != -255)
+            if (best != -255)// If we could find a block for current process
             {
-                array.add(best);
+                array.add(best);// allocate block best to process
                 sizeOfBlocks[best] -= sizeOfProcesses[i];
             }
             else{
-                array.add(best);
+                array.add(best);//add price -255->has not been actually allocated
             }
 
         }
