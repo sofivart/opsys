@@ -3,42 +3,40 @@ class FIFO
     // Method to find page faults using indexes
     static int pageFaults(int pages[], int capacity)
     {
-        /*
-         * Put your code in here!
-         */
-        int[] memory = new int[capacity];
-        boolean found;
-        for (int i = 0; i<capacity; i++){
+
+        int[] memory = new int[capacity];       //we create an array of capacity length to store the pages last used
+        boolean found;      //if there is a hit or the memory still has empty space, it becomes true
+        for (int i = 0; i<capacity; i++){       //initialization of memory array with value -1, witch means no pages are stored
             memory[i] = -1;
         }
-        int hit = 0;
-        int lastChange = 0;
+        int hit = 0;        //number of hits
+        int lastChange = 0;     //the place of the memory array that the next page will be stored if it is not a hit
         for(int i=0; i< pages.length; i++){
-            found = false;
-            for(int j = 0; j<capacity; j++){
-                if(memory[j] == -1){
-                    memory[j] = pages[i];
-                    lastChange++;
-                    found = true;
-                    break;
+            found = false;      //initialization of found boolean with value false
+            for(int j = 0; j<capacity; j++){        //parsing through the memory array
+                if(memory[j] == -1){        //if memory cell is empty
+                    memory[j] = pages[i];       //it immediately stores the new page
+                    lastChange++;       //declares the next memory place to be changed
+                    found = true;       //set true so as to not enter the if outside of the loop that pushes the page into memory array
+                    break;      //breaks the loop
                 }
-                if(memory[j] == pages[i]){
-                    hit++;
-                    found = true;
-                    break;
+                if(memory[j] == pages[i]){      //if the memory value equals the page to be loaded
+                    hit++;      //there is a hit
+                    found = true;       //page i is found in the memory table
+                    break;      //breaks the loop
                 }
             }
-            if(!found){
-                memory[lastChange] = pages[i];
-                lastChange++;
+            if(!found){     //when the loop parsing through the memory array is finishes, if boolean found is still false, page i has to be loaded into memory
+                memory[lastChange] = pages[i];      //loads page i to memory place of lastChange
+                lastChange++;       //moves to the next place to be changed
             }
-            if(lastChange == capacity){
-                lastChange = 0;
+            if(lastChange == capacity){     //if the lastChanged value equals capacity, which means me are out od bounds of memory array
+                lastChange = 0;     //we set the lastChanged value back to 0
             }
 
         }
-        int faults = pages.length - hit;
-        return faults;
+        int faults = pages.length - hit;        //faults are the pages array length minus the hits found
+        return faults;      //returns faults
 
     }
 
